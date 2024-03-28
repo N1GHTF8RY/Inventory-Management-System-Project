@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
@@ -7,7 +8,9 @@ namespace InventoryManagementSystemProject
     public partial class ProductForm : Form
     {
 
-        SqlConnection conn = new SqlConnection(@"Data Source=SFT-ABHIJIT-N-P;Initial Catalog=InventoryManagementSystem;Persist Security Info=True;User ID=sa;Password=sa@123;Encrypt=False");
+        static string connString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
+
+        SqlConnection conn = new SqlConnection(connString);
         SqlCommand cmd = new SqlCommand();
         SqlDataReader reader;
 

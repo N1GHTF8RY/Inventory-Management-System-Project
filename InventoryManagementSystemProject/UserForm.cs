@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System.Configuration;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace InventoryManagementSystemProject
@@ -6,7 +7,9 @@ namespace InventoryManagementSystemProject
     public partial class UserForm : Form
     {
 
-        SqlConnection conn = new SqlConnection(@"Data Source=SFT-ABHIJIT-N-P;Initial Catalog=InventoryManagementSystem;Persist Security Info=True;User ID=sa;Password=sa@123;Encrypt=False");
+        static string connString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
+
+        SqlConnection conn = new SqlConnection(connString);
         SqlCommand cmd = new SqlCommand();
         SqlDataReader reader;
 
@@ -49,12 +52,14 @@ namespace InventoryManagementSystemProject
                 UserModuleForm userModule = new UserModuleForm();
                 userModule.UserNameTxt.Text = UserDgv.Rows[e.RowIndex].Cells[1].Value.ToString();
                 userModule.FullNameTxt.Text = UserDgv.Rows[e.RowIndex].Cells[2].Value.ToString();
-                userModule.PasswordTxt.Text = UserDgv.Rows[e.RowIndex].Cells[3].Value.ToString();
                 userModule.PhoneTxt.Text = UserDgv.Rows[e.RowIndex].Cells[4].Value.ToString();
 
                 userModule.SaveBtn.Enabled = false;
                 userModule.UpdateBtn.Enabled = true;
                 userModule.UserNameTxt.Enabled = false;
+                userModule.PasswordTxt.Enabled = false;
+                userModule.ConfirmPassTxt.Enabled = false;
+
                 userModule.ShowDialog();
 
             }

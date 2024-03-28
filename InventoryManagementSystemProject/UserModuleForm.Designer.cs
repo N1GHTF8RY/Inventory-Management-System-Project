@@ -195,7 +195,7 @@
             // 
             // ConfirmPassTxt
             // 
-            this.ConfirmPassTxt.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ConfirmPassTxt.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.ConfirmPassTxt.Location = new System.Drawing.Point(210, 281);
             this.ConfirmPassTxt.Name = "ConfirmPassTxt";
             this.ConfirmPassTxt.Size = new System.Drawing.Size(423, 26);

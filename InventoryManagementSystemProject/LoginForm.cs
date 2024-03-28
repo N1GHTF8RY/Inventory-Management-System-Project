@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows.Forms;
 
 namespace InventoryManagementSystemProject
 {
     public partial class LoginForm : Form
     {
-        SqlConnection conn = new SqlConnection(@"Data Source=SFT-ABHIJIT-N-P;Initial Catalog=InventoryManagementSystem;Persist Security Info=True;User ID=sa;Password=sa@123;Encrypt=False");
+        static string connString = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
+
+        SqlConnection conn = new SqlConnection(connString);
         SqlCommand cmd = new SqlCommand();
         SqlDataReader reader;
 
@@ -46,18 +51,30 @@ namespace InventoryManagementSystemProject
         {
             try
             {
-                cmd = new SqlCommand("SELECT * FROM UserTable WHERE username=@username AND password=@password", conn);
+                cmd = new SqlCommand("SELECT * FROM UserTable WHERE username=@username", conn);
                 cmd.Parameters.AddWithValue("@username", textName.Text);
-                cmd.Parameters.AddWithValue("@password", textPass.Text);
                 conn.Open();
                 reader = cmd.ExecuteReader();
-                reader.Read();
-                if (reader.HasRows)
+
+                if (reader.Read())
                 {
-                    MessageBox.Show("Welcome " + reader["fullname"].ToString() + " | ", "ACCESS GRANTED", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    MainForm main = new MainForm();
-                    this.Hide();
-                    main.ShowDialog();
+                    string storedHashedPassword = reader["password"].ToString();
+                    string userInputPassword = textPass.Text;
+
+                    string hashedInputPassword = HashPassword(userInputPassword);
+
+                    if (ComparePasswords(hashedInputPassword, storedHashedPassword))
+                    {
+                        MessageBox.Show("Welcome " + reader["fullname"].ToString() + "! ", "ACCESS GRANTED", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MainForm main = new MainForm();
+                        this.Hide();
+                        main.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid password!", "ACCESS DENIED", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
                     //this.Dispose();
                 }
                 else
@@ -73,5 +90,28 @@ namespace InventoryManagementSystemProject
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public static string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder strBuilder = new StringBuilder();
+                for (int i = 0; i < hashedBytes.Length; i++)
+                {
+                    strBuilder.Append(hashedBytes[i].ToString("x2"));
+                }
+
+                return strBuilder.ToString();
+            }
+        }
+
+        public bool ComparePasswords(string hashedInputPassword, string storedHashedPassword)
+        {
+            return string.Equals(hashedInputPassword, storedHashedPassword, StringComparison.OrdinalIgnoreCase);
+        }
+
     }
 }
