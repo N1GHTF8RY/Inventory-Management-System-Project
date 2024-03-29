@@ -74,7 +74,7 @@ namespace InventoryManagementSystemProject
             if (Convert.ToDecimal(QtyNumericUpDown.Value) > qty)
             {
                 MessageBox.Show("Instock quantity is not enough!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                QtyNumericUpDown.Value -= 1;
+                QtyNumericUpDown.Value = 0;
                 return;
             }
 
@@ -84,8 +84,6 @@ namespace InventoryManagementSystemProject
                 TotalTxt.Text = total.ToString();
 
             }
-
-
         }
 
         private void CustomersDgv_CellClick(object sender, DataGridViewCellEventArgs e)
