@@ -20,9 +20,9 @@ namespace InventoryManagementSystemProject
             {
                 progressBar1.Value = 0;
                 timer1.Stop();
-                LoginForm login = new LoginForm();
+                RegisterForm register = new RegisterForm();
                 this.Hide();
-                login.ShowDialog();
+                register.ShowDialog();
             }
 
         }

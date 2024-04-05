@@ -116,6 +116,7 @@
             // LoginBtn
             // 
             this.LoginBtn.BackColor = System.Drawing.Color.Blue;
+            this.LoginBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LoginBtn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.LoginBtn.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LoginBtn.ForeColor = System.Drawing.Color.White;
@@ -141,6 +142,7 @@
             // checkBoxPass
             // 
             this.checkBoxPass.AutoSize = true;
+            this.checkBoxPass.Cursor = System.Windows.Forms.Cursors.Hand;
             this.checkBoxPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBoxPass.Location = new System.Drawing.Point(189, 414);
             this.checkBoxPass.Name = "checkBoxPass";
@@ -153,6 +155,7 @@
             // ClearLabel
             // 
             this.ClearLabel.AutoSize = true;
+            this.ClearLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ClearLabel.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClearLabel.ForeColor = System.Drawing.Color.Blue;
             this.ClearLabel.Location = new System.Drawing.Point(34, 411);
